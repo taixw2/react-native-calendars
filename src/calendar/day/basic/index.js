@@ -51,7 +51,7 @@ class Day extends Component {
         marking: true
       };
     }
-    const isDisabled = typeof marking.disabled !== 'undefined' ? marking.disabled : this.props.state === 'disabled';
+    let isDisabled = typeof marking.disabled !== 'undefined' ? marking.disabled : this.props.state === 'disabled';
     let dot;
     if (marking.marked) {
       dotStyle.push(this.style.visibleDot);
@@ -61,6 +61,10 @@ class Day extends Component {
       dot = (<View style={dotStyle}/>);
     }
 
+    if (typeof this.props.disableDate === 'function') {
+      isDisabled = this.props.disableDate(this.props.date)
+    }
+    
     if (marking.selected) {
       containerStyle.push(this.style.selected);
       if (marking.selectedColor) {
@@ -85,6 +89,7 @@ class Day extends Component {
       >
         <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
         {dot}
+        { this.props.subTextComponent ? this.props.subTextComponent(this.props.date, textStyle) : null }
       </TouchableOpacity>
     );
   }

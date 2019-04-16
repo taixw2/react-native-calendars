@@ -196,6 +196,7 @@ class CalendarList extends Component {
   }
 
   render() {
+    
     return (
       <FlatList
         onLayout={this.onLayout}
@@ -206,7 +207,7 @@ class CalendarList extends Component {
         data={this.state.rows}
         //snapToAlignment='start'
         //snapToInterval={this.calendarHeight}
-        removeClippedSubviews={this.props.removeClippedSubviews}
+        // removeClippedSubviews={this.props.removeClippedSubviews}
         pageSize={1}
         horizontal={this.props.horizontal}
         pagingEnabled={this.props.pagingEnabled}

@@ -120,7 +120,12 @@ class Day extends Component {
     let fillerStyle = {};
     let fillers;
 
-    if (this.props.state === 'disabled') {
+    let isDisabled = this.props.state === 'disabled';
+    if (typeof this.props.disableDate === 'function') {
+      isDisabled = this.props.disableDate(this.props.date)
+    }
+
+    if (isDisabled) {
       textStyle.push(this.style.disabledText);
     } else if (this.props.state === 'today') {
       containerStyle.push(this.style.today);
@@ -129,7 +134,7 @@ class Day extends Component {
 
     if (this.props.marking) {
       containerStyle.push({
-        borderRadius: 17
+        borderRadius: 22
       });
 
       const flags = this.markingStyle;
@@ -199,6 +204,7 @@ class Day extends Component {
           {fillers}
           <View style={containerStyle}>
             <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
+            { this.props.subTextComponent ? this.props.subTextComponent(this.props.date, textStyle) : null }
           </View>
         </View>
       </TouchableWithoutFeedback>

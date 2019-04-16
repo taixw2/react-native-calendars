@@ -63,6 +63,7 @@ class Calendar extends Component {
     renderArrow: PropTypes.func,
     // Provide custom day rendering component
     dayComponent: PropTypes.any,
+    subTextComponent: PropTypes.any,
     // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
     monthFormat: PropTypes.string,
     // Disables changing month when click on days of other months (when hideExtraDays is false). Default = false
@@ -71,6 +72,8 @@ class Calendar extends Component {
     hideDayNames: PropTypes.bool,
     // Disable days by default. Default = false
     disabledByDefault: PropTypes.bool,
+    // Disable days by date. (currentDate) => boolean
+    disableDate: PropTypes.func,
     // Show week numbers. Default = false
     showWeekNumbers: PropTypes.bool,
     // Handler which gets executed when press arrow icon left. It receive a callback can go back month
@@ -136,6 +139,7 @@ class Calendar extends Component {
       if (shouldUpdateMonth) {
         this.updateMonth(day);
       }
+      console.log("TCL: Calendar -> _handleDayInteraction -> interaction", interaction)
       if (interaction) {
         interaction(xdateToData(day));
       }
@@ -167,15 +171,15 @@ class Calendar extends Component {
     } else if (dateutils.sameDate(day, XDate())) {
       state = 'today';
     }
-
+    
     if (!dateutils.sameMonth(day, this.state.currentMonth) && this.props.hideExtraDays) {
       return (<View key={id} style={{flex: 1}}/>);
     }
-
+    
     const DayComp = this.getDayComponent();
     const date = day.getDate();
     const dateAsObject = xdateToData(day);
-
+    
     return (
       <View style={{flex: 1, alignItems: 'center'}} key={id}>
         <DayComp
@@ -185,6 +189,8 @@ class Calendar extends Component {
           onPress={this.pressDay}
           onLongPress={this.longPressDay}
           date={dateAsObject}
+          disableDate={this.props.disableDate}
+          subTextComponent={this.props.subTextComponent}
           marking={this.getDateMarking(day)}
         >
           {date}

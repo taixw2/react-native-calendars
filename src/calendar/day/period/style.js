@@ -3,19 +3,21 @@ import * as defaultStyle from '../../../style';
 
 const STYLESHEET_ID = 'stylesheet.day.period';
 
-const FILLER_HEIGHT = 34;
+const FILLER_HEIGHT = 44;
 
 export default function styleConstructor(theme={}) {
   const appStyle = {...defaultStyle, ...theme};
   return StyleSheet.create({
     wrapper: {
+      justifyContent: 'center',
       alignItems: 'center',
       alignSelf: 'stretch',
       marginLeft: -1
     },
     base: {
       //borderWidth: 1,
-      width: 38,
+      justifyContent: 'center',
+      width: 44,
       height: FILLER_HEIGHT,
       alignItems: 'center'
     },
@@ -35,7 +37,6 @@ export default function styleConstructor(theme={}) {
       flex: 1
     },
     text: {
-      marginTop: 7,
       fontSize: appStyle.textDayFontSize,
       fontFamily: appStyle.textDayFontFamily,
       fontWeight: '300',

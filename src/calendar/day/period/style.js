@@ -12,7 +12,8 @@ export default function styleConstructor(theme={}) {
       justifyContent: 'center',
       alignItems: 'center',
       alignSelf: 'stretch',
-      marginLeft: -1
+        // 影响整个日历异动
+      // marginLeft: -1
     },
     base: {
       //borderWidth: 1,

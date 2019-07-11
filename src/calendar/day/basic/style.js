@@ -13,7 +13,8 @@ export default function styleConstructor(theme={}) {
       alignItems: 'center',
     },
     text: {
-      marginTop: Platform.OS === 'android' ? 4 : 6,
+      // 单个选中样式偏下，所以把 marginTop屏蔽掉
+      // marginTop: Platform.OS === 'android' ? 4 : 6,
       fontSize: appStyle.textDayFontSize,
       fontFamily: appStyle.textDayFontFamily,
       fontWeight: '300',

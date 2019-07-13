@@ -150,17 +150,17 @@ class Day extends Component {
       if (flags.rightFillerStyle) {
         rightFillerStyle.backgroundColor = flags.rightFillerStyle;
       }
-
+      // 为了把开始选中的样式变为圆形，源码做了改动，154行if判断为true的块内容与179行的判断为true的块内容进行互换
       if (flags.startingDay && !flags.endingDay) {
-        leftFillerStyle = {
-          backgroundColor: this.theme.calendarBackground
-        };
-        rightFillerStyle = {
-          backgroundColor: flags.startingDay.color
-        };
-        containerStyle.push({
-          backgroundColor: flags.startingDay.color
-        });
+          rightFillerStyle = {
+              backgroundColor: this.theme.calendarBackground
+          };
+          leftFillerStyle = {
+              backgroundColor: this.theme.calendarBackground
+          };
+          containerStyle.push({
+              backgroundColor: flags.startingDay.color
+          });
       } else if (flags.endingDay && !flags.startingDay) {
         rightFillerStyle = {
           backgroundColor: this.theme.calendarBackground
@@ -177,15 +177,15 @@ class Day extends Component {
         // #177 bug
         fillerStyle = {backgroundColor: flags.day.color};
       } else if (flags.endingDay && flags.startingDay) {
-        rightFillerStyle = {
-          backgroundColor: this.theme.calendarBackground
-        };
-        leftFillerStyle = {
-          backgroundColor: this.theme.calendarBackground
-        };
-        containerStyle.push({
-          backgroundColor: flags.endingDay.color
-        });
+          leftFillerStyle = {
+              backgroundColor: this.theme.calendarBackground
+          };
+          rightFillerStyle = {
+              backgroundColor: flags.startingDay.color
+          };
+          containerStyle.push({
+              backgroundColor: flags.startingDay.color
+          });
       }
 
       fillers = (

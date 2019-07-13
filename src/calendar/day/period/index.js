@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {
   TouchableWithoutFeedback,
@@ -51,8 +51,8 @@ class Day extends Component {
       this.markingStyle = newMarkingStyle;
       return true;
     }
-
-    return shouldUpdate(this.props, nextProps, ['state', 'children', 'onPress', 'onLongPress']);
+    // 增加对marking 字段的变化监听
+    return shouldUpdate(this.props, nextProps, ['state', 'children','marking', 'onPress', 'onLongPress']);
   }
 
   getDrawingStyle(marking) {
@@ -99,9 +99,13 @@ class Day extends Component {
           color
         };
       }
+      // 在markedDates入参属性增加endingDayText 字段,为了显示结束语
+      if (next.endingDay && next.endingDayText) {
+        prev.endingDay.endingDayText = next.endingDayText;
+      }
       if (!next.startingDay && !next.endingDay) {
         prev.day = {
-          color
+            color
         };
       }
       if (next.textColor) {
@@ -195,7 +199,7 @@ class Day extends Component {
         </View>
       );
     }
-
+    // 在markedDates入参属性增加endingDayText 字段,为了显示结束语
     return (
       <TouchableWithoutFeedback
         onPress={this.onDayPress}
@@ -203,8 +207,15 @@ class Day extends Component {
         <View style={this.style.wrapper}>
           {fillers}
           <View style={containerStyle}>
-            <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
-            { this.props.subTextComponent ? this.props.subTextComponent(this.props.date, textStyle) : null }
+            {
+              this.markingStyle && this.markingStyle.endingDay && this.markingStyle.endingDay.endingDayText ?
+                <Text style={textStyle}>{this.markingStyle.endingDay.endingDayText}</Text> : (
+                <Fragment>
+                    <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
+                    { this.props.subTextComponent ? this.props.subTextComponent(this.props.date, textStyle) : null }
+                </Fragment>
+              )
+            }
           </View>
         </View>
       </TouchableWithoutFeedback>
